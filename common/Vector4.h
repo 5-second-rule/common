@@ -246,6 +246,10 @@ namespace Common {
 			u += v;
 			return u;
 		}
+
+		const float* getPointer() const {
+			return this->vector;
+		}
 	};
 
 	inline Vector4 operator+(Vector4 u, const Vector4& v) {
