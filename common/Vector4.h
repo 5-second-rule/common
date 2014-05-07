@@ -1,13 +1,17 @@
 #pragma once
+#include "common.h"
 
 #include <stdexcept>
 #include <iostream>
 
 #define VECTOR4_RANGE_ERR "index must be in [0,4)"
 
+#define Point(x, y, z) Vector4((x), (y), (z), 1.0f)
+#define Vector(x, y, z) Vector4((x), (y), (z), 0.0f)
+
 namespace Common {
 
-	class _declspec(dllexport) Vector4
+	class COMMONDLL Vector4
 	{
 	protected:
 		float vector[4];

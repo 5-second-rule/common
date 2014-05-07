@@ -1,10 +1,11 @@
 #pragma once
+#include "common.h"
 
 #include "Vector4.h"
 
 namespace Common {
 
-	class _declspec(dllexport) Matrix4
+	class COMMONDLL Matrix4
 	{
 	private:
 		// Utility Methods
