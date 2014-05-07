@@ -4,7 +4,7 @@
 
 namespace Common {
 
-	class Matrix4
+	class _declspec(dllexport) Matrix4
 	{
 	private:
 		// Utility Methods

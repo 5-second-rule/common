@@ -7,7 +7,7 @@
 
 namespace Common {
 
-	class  Vector4
+	class _declspec(dllexport) Vector4
 	{
 	protected:
 		float vector[4];
