@@ -1,7 +1,11 @@
 #pragma once
-#include "common.h"
+#include <string>
+#include <sstream>
+
+#include "../common.h"
 
 #include "Vector4.h"
+
 
 namespace Common {
 
@@ -66,6 +70,18 @@ namespace Common {
 			m[3][3] = m33;
 		}
 
+		Matrix4(const Vector4 &x, const Vector4 &y, const Vector4 &z, const Vector4 &b){
+			int i;
+			for (i = 0; i < 4; i++)
+				m[0][i] = x[i];
+			for (i = 0; i < 4; i++)
+				m[1][i] = y[i];
+			for (i = 0; i < 4; i++)
+				m[2][i] = z[i];
+			for (i = 0; i < 4; i++)
+				m[3][i] = b[i];
+		}
+
 		Matrix4(float a[4][4]) {
 			this->assign(a);
 		}
@@ -80,6 +96,18 @@ namespace Common {
 
 		void set(int row, int col, float val) {
 			m[col][row] = val;
+		}
+
+		void setLines(const Vector4 &row1, const Vector4 &row2, const Vector4 &row3, const Vector4 &row4){
+			int i;
+			for (i = 0; i < 4; ++i)
+				m[i][0] = row1[i];
+			for (i = 0; i < 4; ++i)
+				m[i][1] = row2[i];
+			for (i = 0; i < 4; ++i)
+				m[i][2] = row3[i];
+			for (i = 0; i < 4; ++i)
+				m[i][3] = row4[i];
 		}
 
 		Matrix4& operator=(Matrix4 rhs) {
@@ -213,13 +241,19 @@ namespace Common {
 			return Matrix4(a);
 		}
 
-		void print() {
+		std::string toString(){
+			std::stringstream buffer;
 			for (int i = 0; i < 4; i++) {
-				std::cout << "[ ";
+				buffer << "[ ";
 				for (int j = 0; j < 4; j++)
-					std::cout << this->m[j][i] << ", ";
-				std::cout << "]" << std::endl;
+					buffer << this->m[j][i] << ", ";
+				buffer << "]" << std::endl;
 			}
+			return buffer.str();
+		}
+
+		void print() {
+			std::cout << toString();
 		}
 
 		Matrix4 transpose() {
