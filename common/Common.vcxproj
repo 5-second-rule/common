@@ -76,16 +76,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="4D\Matrix4.h" />
-    <ClInclude Include="4D\Vector4.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Debug\DebugConsole.h" />
+    <ClInclude Include="Matrix4.h" />
     <ClInclude Include="misc\utils.h" />
-    <ClInclude Include="Time\CrudeTimer.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="4D\Vector4.cpp" />
-    <ClCompile Include="Time\CrudeTimer.cpp" />
+    <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

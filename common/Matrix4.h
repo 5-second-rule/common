@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 
-#include "../common.h"
+#include "common.h"
 
 #include "Vector4.h"
 
