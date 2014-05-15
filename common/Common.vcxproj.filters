@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="4D">
+      <UniqueIdentifier>{3dc63f40-0384-4b56-9d0c-73ae1bc8ebac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -24,11 +27,19 @@
     <ClInclude Include="Debug\DebugConsole.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vector4.h">
-      <Filter>Header Files</Filter>
+      <Filter>4D</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix4.h">
+      <Filter>4D</Filter>
+    </ClInclude>
+    <ClInclude Include="4D\Transformation.h">
+      <Filter>4D</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="4D\Transformation.cpp">
+      <Filter>4D</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
