@@ -24,9 +24,6 @@
     <ClInclude Include="misc\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Debug\DebugConsole.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vector4.h">
       <Filter>4D</Filter>
     </ClInclude>
