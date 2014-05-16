@@ -8,7 +8,7 @@
 //  Author: Mat Buckland (fup@ai-junkie.com)
 //
 //------------------------------------------------------------------------
-#define _USE_MATH_DEFINES
+
 #include <cmath>
 #include <sstream>
 #include <string>
@@ -27,7 +27,7 @@ namespace Common{
 	const float   MaxFloat = (std::numeric_limits<float>::max)();
 	const float   MinFloat = (std::numeric_limits<float>::min)();
 
-	const double   Pi = M_PI;
+	const double   Pi = 3.14159;
 	const double   TwoPi = Pi * 2;
 	const double   HalfPi = Pi / 2;
 	const double   QuarterPi = Pi / 4;
@@ -105,7 +105,7 @@ namespace Common{
 	}
 
 	//returns a random double in the range -1 < n < 1
-	inline double RandomClamped()    { return RandFloat() - RandFloat(); }
+	inline double randomClamped()    { return RandFloat() - RandFloat(); }
 
 
 	//returns a random number with a normal distribution. See method at
