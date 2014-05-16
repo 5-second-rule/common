@@ -9,5 +9,3 @@
 #define COMMONDLL
 #endif
 #endif
-
-namespace Common{}

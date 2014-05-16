@@ -66,17 +66,17 @@ namespace Common {
 
 		// Get
 
-		float Vector4::get(int index) const {
+		float get(int index) const {
 			if (index < 0 || index >= SIZE) throw std::out_of_range(VECTOR4_RANGE_ERR);
 			else return this->vector[index];
 		}
 
-		float& Vector4::operator[](const int index) {
+		float& operator[](const int index) {
 			if (index < 0 || index >= SIZE) throw std::out_of_range(VECTOR4_RANGE_ERR);
 			else return this->vector[index];
 		}
 
-		float Vector4::operator[](const int index) const {
+		float operator[](const int index) const {
 			return this->get(index);
 		}
 
