@@ -250,6 +250,18 @@ namespace Common {
 		const float* getPointer() const {
 			return this->vector;
 		}
+
+		bool operator==(const Vector4& v) const {
+			return
+				this->x() == v.x() &&
+				this->y() == v.y() &&
+				this->z() == v.z() &&
+				this->w() == v.w();
+		}
+
+		bool operator!=(const Vector4& v) const {
+			return !(*this == v);
+		}
 	};
 
 	inline Vector4 operator+(Vector4 u, const Vector4& v) {
