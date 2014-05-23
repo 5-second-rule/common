@@ -70,6 +70,7 @@ namespace Common {
 			m[3][3] = m33;
 		}
 
+		// Create the matrix from the column vector x, y, z and b
 		Matrix4(const Vector4 &x, const Vector4 &y, const Vector4 &z, const Vector4 &b){
 			int i;
 			for (i = 0; i < 4; i++)

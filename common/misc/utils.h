@@ -82,7 +82,7 @@ namespace Common{
 	//----------------------------------------------------------------------------
 
 	//returns a random integer between x and y
-	inline int   RandInt(int x, int y)
+	inline int   randInt(int x, int y)
 	{
 		assert(y >= x && "<RandInt>: y is less than x");
 		return rand() % (y - x + 1) + x;
