@@ -16,9 +16,11 @@
 #include <limits>
 #include <cassert>
 #include <iomanip>
+#include <algorithm>
 
 #include "../Matrix4.h"
 
+using namespace std;
 namespace Common{
 	//a few useful constants
 	const int     MaxInt = (std::numeric_limits<int>::max)();
@@ -32,50 +34,11 @@ namespace Common{
 	const double   HalfPi = Pi / 2;
 	const double   QuarterPi = Pi / 4;
 
-	//returns true if the value is a NaN
-	template <typename T>
-	inline bool isNaN(T val)
-	{
-		return val != val;
-	}
-
-	inline double DegsToRads(double degs)
-	{
-		return TwoPi * (degs / 360.0);
-	}
-
-
-
 	//returns true if the parameter is equal to zero
-	inline bool IsZero(double val)
+	inline bool isZero(double val)
 	{
 		return ((-MinDouble < val) && (val < MinDouble));
 	}
-
-	//returns true is the third parameter is in the range described by the
-	//first two
-	inline bool InRange(double start, double end, double val)
-	{
-		if (start < end)
-		{
-			if ((val > start) && (val < end)) return true;
-			else return false;
-		}
-
-		else
-		{
-			if ((val < start) && (val > end)) return true;
-			else return false;
-		}
-	}
-
-	template <class T>
-	T Maximum(const T& v1, const T& v2)
-	{
-		return v1 > v2 ? v1 : v2;
-	}
-
-
 
 	//----------------------------------------------------------------------------
 	//  some random number functions.
@@ -89,23 +52,23 @@ namespace Common{
 	}
 
 	//returns a random double between zero and 1
-	inline double RandFloat()      { return ((rand()) / (RAND_MAX + 1.0)); }
+	inline double randFloat()      { return ((rand()) / (RAND_MAX + 1.0)); }
 
-	inline double RandInRange(double x, double y)
+	inline double randInRange(double x, double y)
 	{
-		return x + RandFloat()*(y - x);
+		return x + randFloat()*(y - x);
 	}
 
 	//returns a random bool
-	inline bool   RandBool()
+	inline bool   randBool()
 	{
-		if (RandFloat() > 0.5) return true;
+		if (randFloat() > 0.5) return true;
 
 		else return false;
 	}
 
 	//returns a random double in the range -1 < n < 1
-	inline double randomClamped()    { return RandFloat() - RandFloat(); }
+	inline double randomClamped()    { return randFloat() - randFloat(); }
 
 
 	//returns a random number with a normal distribution. See method at
@@ -125,8 +88,8 @@ namespace Common{
 		{
 			do
 			{
-				x1 = 2.0 * RandFloat() - 1.0;
-				x2 = 2.0 * RandFloat() - 1.0;
+				x1 = 2.0 * randFloat() - 1.0;
+				x2 = 2.0 * randFloat() - 1.0;
 				w = x1 * x1 + x2 * x2;
 			} while (w >= 1.0);
 
@@ -139,170 +102,44 @@ namespace Common{
 		return(mean + y1 * standard_deviation);
 	}
 
-
-
-	//-----------------------------------------------------------------------
-	//  
-	//  some handy little functions
-	//-----------------------------------------------------------------------
-
-
-	inline double Sigmoid(double input, double response = 1.0)
-	{
-		return (1.0 / (1.0 + exp(-input / response)));
-	}
-
-
-	//returns the maximum of two values
-	template <class T>
-	inline T MaxOf(const T& a, const T& b)
-	{
-		if (a>b) return a; return b;
-	}
-
-	//returns the minimum of two values
-	template <class T>
-	inline T MinOf(const T& a, const T& b)
-	{
-		if (a<b) return a; return b;
-	}
-
-
-	//clamps the first argument between the second two
-	template <class T, class U, class V>
-	inline void Clamp(T& arg, const U& minVal, const V& maxVal)
-	{
-		assert(((double)minVal < (double)maxVal) && "<Clamp>MaxVal < MinVal!");
-
-		if (arg < (T)minVal)
-		{
-			arg = (T)minVal;
-		}
-
-		if (arg >(T)maxVal)
-		{
-			arg = (T)maxVal;
-		}
-	}
-
-
-	//rounds a double up or down depending on its value
-	inline int Rounded(double val)
-	{
-		int    integral = (int)val;
-		double mantissa = val - integral;
-
-		if (mantissa < 0.5)
-		{
-			return integral;
-		}
-
-		else
-		{
-			return integral + 1;
-		}
-	}
-
-	//rounds a double up or down depending on whether its 
-	//mantissa is higher or lower than offset
-	inline int RoundUnderOffset(double val, double offset)
-	{
-		int    integral = (int)val;
-		double mantissa = val - integral;
-
-		if (mantissa < offset)
-		{
-			return integral;
-		}
-
-		else
-		{
-			return integral + 1;
-		}
-	}
-
-	//compares two real numbers. Returns true if they are equal
-	inline bool isEqual(float a, float b)
-	{
-		if (fabs(a - b) < 1E-12)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	inline bool isEqual(double a, double b)
-	{
-		if (fabs(a - b) < 1E-12)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-
-	template <class T>
-	inline double Average(const std::vector<T>& v)
-	{
-		double average = 0.0;
-
-		for (unsigned int i = 0; i < v.size(); ++i)
-		{
-			average += (double)v[i];
-		}
-
-		return average / (double)v.size();
-	}
-
-
-	inline double StandardDeviation(const std::vector<double>& v)
-	{
-		double sd = 0.0;
-		double average = Average(v);
-
-		for (unsigned int i = 0; i<v.size(); ++i)
-		{
-			sd += (v[i] - average) * (v[i] - average);
-		}
-
-		sd = sd / v.size();
-
-		return sqrt(sd);
-	}
-
-
-	template <class container>
-	inline void DeleteSTLContainer(container& c)
-	{
-		for (container::iterator it = c.begin(); it != c.end(); ++it)
-		{
-			delete *it;
-			*it = NULL;
-		}
-	}
-
-	template <class map>
-	inline void DeleteSTLMap(map& m)
-	{
-		for (map::iterator it = m.begin(); it != m.end(); ++it)
-		{
-			delete it->second;
-			it->second = NULL;
-		}
-	}
-
-	inline Vector4 rotateAroundOrigin(const Vector4 &u, float angle){
-		return Common::Matrix4::rotate(Vector4(0, 1, 0), angle) * u;
-	}
-
 	inline float distanceSquared(const Vector4 &u, const Vector4 &v){
 		return (u - v).lengthSquared();
 	}
 
 	inline float distance(const Vector4 &u, const Vector4 &v){
 		return (u - v).length();
+	}
+
+	inline string toString(int a){
+		stringstream buffer;
+		buffer << a;
+		return buffer.str();
+	}
+
+	inline string toString(float f){
+		stringstream buffer;
+		buffer << f;
+		return buffer.str();
+	}
+
+	inline float toFloat(string f){
+		stringstream buffer;
+		float tmp;
+		buffer << f;
+		buffer >> tmp;
+		return tmp;
+	}
+
+	inline char toLowerChar(char c){
+		if (c >= 'A' && c <= 'Z'){
+			return c - 'A' + 'a';
+		}
+		return c;
+	}
+
+	inline string toLower(string str){
+		transform(str.begin(), str.end(), str.begin(), toLowerChar);
+		return str;
 	}
 
 }
