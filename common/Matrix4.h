@@ -1,7 +1,11 @@
 #pragma once
+#include <string>
+#include <sstream>
+
 #include "common.h"
 
 #include "Vector4.h"
+
 
 namespace Common {
 
@@ -82,6 +86,18 @@ namespace Common {
 			m[col][row] = val;
 		}
 
+		void setLines(const Vector4 &row1, const Vector4 &row2, const Vector4 &row3, const Vector4 &row4){
+			int i;
+			for (i = 0; i < 4; ++i)
+				m[i][0] = row1[i];
+			for (i = 0; i < 4; ++i)
+				m[i][1] = row2[i];
+			for (i = 0; i < 4; ++i)
+				m[i][2] = row3[i];
+			for (i = 0; i < 4; ++i)
+				m[i][3] = row4[i];
+		}
+
 		Matrix4& operator=(Matrix4 rhs) {
 			for (int i = 0; i < 4; i++)
 				for (int j = 0; j < 4; j++)
@@ -89,6 +105,7 @@ namespace Common {
 
 			return (*this);
 		}
+
 		Matrix4 operator*(const Matrix4& rhs) {
 			Matrix4 result;
 			result.m[0][0] = this->get(0, 0) * rhs.get(0, 0) + this->get(0, 1) * rhs.get(1, 0) + this->get(0, 2) * rhs.get(2, 0) + this->get(0, 3) * rhs.get(3, 0);
@@ -202,6 +219,17 @@ namespace Common {
 		static Matrix4 scale(float s) {
 			return Matrix4::scale(s, s, s);
 		}
+
+		// Create the base matrix from the base vectors x, y, z and center b
+		static Matrix4 base(const Vector4 &x, const Vector4 &y, const Vector4 &z, const Vector4 &b){
+			float m[4][4] = 
+				{ { x[0], y[1], z[2], 0 },
+				  { x[1], y[1], z[1], 0 },
+				  { x[2], y[2], z[2], 0 },
+				  { b[0], b[1], b[2], 1 } };
+			return Matrix4(m);
+		}
+
 		static Matrix4 scale(float x, float y, float z) {
 			float a[4][4] = {
 					{ x, 0, 0, 0 },
@@ -213,13 +241,19 @@ namespace Common {
 			return Matrix4(a);
 		}
 
-		void print() {
+		std::string toString(){
+			std::stringstream buffer;
 			for (int i = 0; i < 4; i++) {
-				std::cout << "[ ";
+				buffer << "[ ";
 				for (int j = 0; j < 4; j++)
-					std::cout << this->m[j][i] << ", ";
-				std::cout << "]" << std::endl;
+					buffer << this->m[j][i] << ", ";
+				buffer << "]" << std::endl;
 			}
+			return buffer.str();
+		}
+
+		void print() {
+			std::cout << toString();
 		}
 
 		Matrix4 transpose() {

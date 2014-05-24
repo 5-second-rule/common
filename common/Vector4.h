@@ -1,13 +1,17 @@
 #pragma once
+
+#include <iostream>
+#include <sstream>
+
 #include "common.h"
 
 #include <stdexcept>
-#include <iostream>
 
 #define VECTOR4_RANGE_ERR "index must be in [0,4)"
 
 #define Point(x, y, z) Vector4((x), (y), (z), 1.0f)
 #define Vector(x, y, z) Vector4((x), (y), (z), 0.0f)
+
 
 namespace Common {
 
@@ -67,12 +71,12 @@ namespace Common {
 			else return this->vector[index];
 		}
 
-		float& operator [](const int index) {
+		float& operator[](const int index) {
 			if (index < 0 || index >= SIZE) throw std::out_of_range(VECTOR4_RANGE_ERR);
 			else return this->vector[index];
 		}
 
-		float operator [](const int index) const {
+		float operator[](const int index) const {
 			return this->get(index);
 		}
 
@@ -201,6 +205,14 @@ namespace Common {
 			return v;
 		}
 
+		static Vector4 perp(Vector4 &v){
+			float x, y, z;
+			x = v[2];
+			y = v[2];
+			z = -v[0] - v[1];			
+			return Vector4(x, y, z, 0);
+		}
+
 		void normalize() {
 			float mag = this->length();
 			if (mag != 0) {
@@ -230,13 +242,19 @@ namespace Common {
 			return this->dot(*this);
 		}
 
-
-		void print() const {
-			std::cout << "<" <<
+		std::string toString() const{
+			std::stringstream buffer;
+			buffer << "<" <<
 				this->vector[0] << ", " <<
 				this->vector[1] << ", " <<
 				this->vector[2] << ", " <<
-				this->vector[3] << ">" << std::endl;
+				this->vector[3] << ">";
+			return buffer.str();
+		}
+
+
+		void print() const {
+			std::cout << toString() << std::endl;
 		}
 
 
@@ -283,9 +301,6 @@ namespace Common {
 		u.negate();
 		return u;
 	}
-
-
-
 }
 
 
