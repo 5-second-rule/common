@@ -70,19 +70,6 @@ namespace Common {
 			m[3][3] = m33;
 		}
 
-		// Create the matrix from the column vector x, y, z and b
-		Matrix4(const Vector4 &x, const Vector4 &y, const Vector4 &z, const Vector4 &b){
-			int i;
-			for (i = 0; i < 4; i++)
-				m[0][i] = x[i];
-			for (i = 0; i < 4; i++)
-				m[1][i] = y[i];
-			for (i = 0; i < 4; i++)
-				m[2][i] = z[i];
-			for (i = 0; i < 4; i++)
-				m[3][i] = b[i];
-		}
-
 		Matrix4(float a[4][4]) {
 			this->assign(a);
 		}
@@ -118,6 +105,7 @@ namespace Common {
 
 			return (*this);
 		}
+
 		Matrix4 operator*(const Matrix4& rhs) {
 			Matrix4 result;
 			result.m[0][0] = this->get(0, 0) * rhs.get(0, 0) + this->get(0, 1) * rhs.get(1, 0) + this->get(0, 2) * rhs.get(2, 0) + this->get(0, 3) * rhs.get(3, 0);
@@ -231,6 +219,17 @@ namespace Common {
 		static Matrix4 scale(float s) {
 			return Matrix4::scale(s, s, s);
 		}
+
+		// Create the base matrix from the base vectors x, y, z and center b
+		static Matrix4 base(const Vector4 &x, const Vector4 &y, const Vector4 &z, const Vector4 &b){
+			float m[4][4] = 
+				{ { x[0], y[1], z[2], 0 },
+				  { x[1], y[1], z[1], 0 },
+				  { x[2], y[2], z[2], 0 },
+				  { b[0], b[1], b[2], 1 } };
+			return Matrix4(m);
+		}
+
 		static Matrix4 scale(float x, float y, float z) {
 			float a[4][4] = {
 					{ x, 0, 0, 0 },

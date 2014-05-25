@@ -1,15 +1,7 @@
 #pragma once
-//------------------------------------------------------------------------
-//
-//  Name: utils.h
-//
-//  Desc: misc utility functions and constants
-//
-//  Author: Mat Buckland (fup@ai-junkie.com)
-//
-//------------------------------------------------------------------------
 
 #include <cmath>
+#include <random>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -34,73 +26,32 @@ namespace Common{
 	const double   HalfPi = Pi / 2;
 	const double   QuarterPi = Pi / 4;
 
-	//returns true if the parameter is equal to zero
-	inline bool isZero(double val)
-	{
-		return ((-MinDouble < val) && (val < MinDouble));
+	// Returns a random double between zero and 1
+	inline double randFloat() {
+		static std::default_random_engine generator;
+		static std::uniform_real_distribution<double> distribution(0.0, 1.0);
+		return distribution(generator);
 	}
 
-	//----------------------------------------------------------------------------
-	//  some random number functions.
-	//----------------------------------------------------------------------------
-
-	//returns a random integer between x and y
-	inline int   randInt(int x, int y)
-	{
-		assert(y >= x && "<RandInt>: y is less than x");
-		return rand() % (y - x + 1) + x;
+	
+	// Returns an integer in the interval [a, b]
+	inline bool randInt(int a, int b) {
+		static std::default_random_engine generator;
+		std::uniform_int_distribution<int> distribution(a, b);
+		return distribution(generator);
 	}
 
-	//returns a random double between zero and 1
-	inline double randFloat()      { return ((rand()) / (RAND_MAX + 1.0)); }
-
-	inline double randInRange(double x, double y)
-	{
-		return x + randFloat()*(y - x);
+	// Returns a bool
+	inline bool randBool() {
+		return randInt(0, 100) < 50 ? true : false;
 	}
 
-	//returns a random bool
-	inline bool   randBool()
-	{
-		if (randFloat() > 0.5) return true;
-
-		else return false;
+	// Returns a random double in the range -1 < n < 1
+	inline double randomClamped() {
+		return randFloat() - randFloat();
 	}
 
-	//returns a random double in the range -1 < n < 1
-	inline double randomClamped()    { return randFloat() - randFloat(); }
 
-
-	//returns a random number with a normal distribution. See method at
-	//http://www.taygeta.com/random/gaussian.html
-	inline double RandGaussian(double mean = 0.0, double standard_deviation = 1.0)
-	{
-		double x1, x2, w, y1;
-		static double y2;
-		static int use_last = 0;
-
-		if (use_last)		        /* use value from previous call */
-		{
-			y1 = y2;
-			use_last = 0;
-		}
-		else
-		{
-			do
-			{
-				x1 = 2.0 * randFloat() - 1.0;
-				x2 = 2.0 * randFloat() - 1.0;
-				w = x1 * x1 + x2 * x2;
-			} while (w >= 1.0);
-
-			w = sqrt((-2.0 * log(w)) / w);
-			y1 = x1 * w;
-			y2 = x2 * w;
-			use_last = 1;
-		}
-
-		return(mean + y1 * standard_deviation);
-	}
 
 	inline float distanceSquared(const Vector4 &u, const Vector4 &v){
 		return (u - v).lengthSquared();
@@ -128,6 +79,13 @@ namespace Common{
 		buffer << f;
 		buffer >> tmp;
 		return tmp;
+	}
+
+	inline bool toBool(string b){
+		if (b == "true")
+			return true;
+		else
+			return false;
 	}
 
 	inline char toLowerChar(char c){
