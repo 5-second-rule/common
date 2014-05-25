@@ -33,9 +33,8 @@ namespace Common{
 		return distribution(generator);
 	}
 
-	
 	// Returns an integer in the interval [a, b]
-	inline bool randInt(int a, int b) {
+	inline int randInt(int a, int b) {
 		static std::default_random_engine generator;
 		std::uniform_int_distribution<int> distribution(a, b);
 		return distribution(generator);
@@ -50,8 +49,6 @@ namespace Common{
 	inline double randomClamped() {
 		return randFloat() - randFloat();
 	}
-
-
 
 	inline float distanceSquared(const Vector4 &u, const Vector4 &v){
 		return (u - v).lengthSquared();

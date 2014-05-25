@@ -18,7 +18,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	x.normalize();
 	y.normalize();
 	z.normalize();
-	Matrix4 trans(x, y, z, Vector4(0, 0, 0, 1));
+	Matrix4 trans = Matrix4::base(x, y, z, Vector4(0, 0, 0));
 	Vector4 transformed = trans.multiply(b);
 	trans.print();
 	transformed.print();
