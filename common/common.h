@@ -1,5 +1,7 @@
 #pragma once
 
+#define _LEFT_HANDED
+
 #ifdef _EXPORT_COMMON
 #define COMMONDLL __declspec(dllexport)
 #else
