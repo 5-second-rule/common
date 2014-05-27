@@ -8,23 +8,23 @@ namespace Common {
 	class COMMONDLL IMoveable {
 	public:
 		/* Relative */
-		void move(float dx, float dy, float dz);
-		void move(const Vector4& delta);
+		virtual void move(float dx, float dy, float dz) = 0;
+		virtual void move(const Vector4& delta) = 0;
 
-		void rotate(float x, float y, float z);
-		void rotate(const Vector4& vector, float degrees);
+		virtual void rotate(float x, float y, float z) = 0;
+		virtual void rotate(const Vector4& vector, float degrees) = 0;
 
 		/* Absolute */
-		void setScale(float scale);
+		virtual void setScale(float scale) = 0;
 
-		void setPosition(float x, float y, float z);
-		void setPosition(const Vector4& pos);
+		virtual void setPosition(float x, float y, float z) = 0;
+		virtual void setPosition(const Vector4& pos) = 0;
 
-		void setRotation(float x, float y, float z);
+		virtual void setRotation(float x, float y, float z) = 0;
 
 		/* Getters */
-		const Vector4 getPosition() const;
-		const Matrix4 getRotation() const;
-		const float getScale() const;
+		virtual const Vector4& getPosition() const = 0;
+		virtual const Matrix4& getRotation() const = 0;
+		virtual const float getScale() const = 0;
 	};
 }

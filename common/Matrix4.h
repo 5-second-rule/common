@@ -136,43 +136,83 @@ namespace Common {
 		}  // create identity matrix
 
 		static Matrix4 rotateX(float angle) {
-
+#ifdef _LEFT_HANDED
+			float a[4][4] = {
+				{ 1, 0, 0, 0 },
+				{ 0, cos(angle), sin(angle), 0 },
+				{ 0, -sin(angle), cos(angle), 0 },
+				{ 0, 0, 0, 1 }
+			};
+#else
 			float a[4][4] = {
 					{ 1, 0, 0, 0 },
 					{ 0, cos(angle), -sin(angle), 0 },
 					{ 0, sin(angle), cos(angle), 0 },
 					{ 0, 0, 0, 1 }
 			};
-
+#endif
 			return Matrix4(a);
 		}
 
-		static Matrix4 rotateY(float angle)
-		{
+		static Matrix4 rotateY(float angle) {
+#ifdef _LEFT_HANDED
+			float a[4][4] = {
+				{ cos(angle), 0, -sin(angle), 0 },
+				{ 0, 1, 0, 0 },
+				{ sin(angle), 0, cos(angle), 0 },
+				{ 0, 0, 0, 1 }
+			};
+#else
 			float a[4][4] = {
 					{ cos(angle), 0, sin(angle), 0 },
 					{ 0, 1, 0, 0 },
 					{ -sin(angle), 0, cos(angle), 0 },
 					{ 0, 0, 0, 1 }
 			};
-
+#endif
 			return Matrix4(a);
 		}
 		static Matrix4 rotateZ(float angle)
 		{
+#ifdef _LEFT_HANDED
+			float a[4][4] = {
+				{ cos(angle), sin(angle), 0, 0 },
+				{ -sin(angle), cos(angle), 0, 0 },
+				{ 0, 0, 1, 0 },
+				{ 0, 0, 0, 1 }
+			};
+#else
 			float a[4][4] = {
 					{ cos(angle), -sin(angle), 0, 0 },
 					{ sin(angle), cos(angle), 0, 0 },
 					{ 0, 0, 1, 0 },
 					{ 0, 0, 0, 1 }
 			};
-
+#endif
 			return Matrix4(a);
 		}
 
-		static Matrix4 rotate(const Vector4& v, float angle) {
+		static Matrix4 rotate(Vector4 v, float angle) {
 
 			if (angle == 0 || isnan(angle)) return Matrix4::identity();
+			v.normalize();
+
+			float c = cos(angle);
+			float s = sin(angle);
+			float t = 1 - cos(angle);
+			float x = v.x();
+			float y = v.y();
+			float z = v.z();
+
+#ifdef _LEFT_HANDED
+			float a[4][4] = {
+				{ t*x*x + c,   t*x*y + s*z, t*x*z - s*y, 0 },
+				{ t*x*y - s*z, t*y*y+c,     t*y*z + s*x, 0 },
+				{ t*x*z + s*y, t*y*z - s*x, t*z*z + c,   0 },
+				{ 0,           0,           0,           1 }
+			};
+
+#else //right handed
 
 			float a[4][4] = {
 					{ cos(angle) + v.x()*v.x()*(1 - cos(angle)), v.x()*v.y()*(1 - cos(angle)) - v.z()*sin(angle), v.x()*v.z()*(1 - cos(angle)) + v.y()*sin(angle), 0 },
@@ -180,7 +220,7 @@ namespace Common {
 					{ v.z()*v.x()*(1 - cos(angle)) - v.y()*sin(angle), v.z()*v.y()*(1 - cos(angle)) + v.x()*sin(angle), cos(angle) + v.z()*v.z()*(1 - cos(angle)), 0 },
 					{ 0, 0, 0, 1 }
 			};
-
+#endif
 			return Matrix4(a);
 		}
 
