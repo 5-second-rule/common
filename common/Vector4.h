@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 #include <iostream>
+#include <string>
 
 #define VECTOR4_RANGE_ERR "index must be in [0,4)"
 
@@ -231,6 +232,11 @@ namespace Common {
 		}
 
 
+		std::string toString() {
+			return "<" + std::to_string(this->vector[0]) + ", " + std::to_string(this->vector[1]) + ", "
+							+ std::to_string( this->vector[2] ) + ", " + std::to_string( this->vector[3] ) + ">\r\n";
+		}
+		
 		void print() const {
 			std::cout << "<" <<
 				this->vector[0] << ", " <<
