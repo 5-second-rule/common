@@ -232,7 +232,7 @@ namespace Common {
 		}
 
 
-		std::string toString() {
+		std::string toString() const {
 			return "<" + std::to_string(this->vector[0]) + ", " + std::to_string(this->vector[1]) + ", "
 							+ std::to_string( this->vector[2] ) + ", " + std::to_string( this->vector[3] ) + ">\r\n";
 		}
