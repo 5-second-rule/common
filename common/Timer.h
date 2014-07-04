@@ -1,4 +1,5 @@
 #pragma once
+#include "common.h"
 
 #include <vector>
 #include <chrono>
@@ -9,7 +10,7 @@ namespace Common {
 	typedef std::chrono::high_resolution_clock HiResClock;
 	typedef std::chrono::microseconds microseconds;
 
-	class Timer
+	class COMMONDLL Timer
 	{
 	public:
 
@@ -30,7 +31,7 @@ namespace Common {
 		}
 
 	public:
-		class Task
+		class COMMONDLL Task
 		{
 		protected:
 			Timer& parent;
@@ -78,6 +79,5 @@ namespace Common {
 		Node head;
 		Node* current;
 	};
-
 
 };
