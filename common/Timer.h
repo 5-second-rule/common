@@ -12,6 +12,9 @@ namespace Common {
 
 	class COMMONDLL Timer
 	{
+	private:
+		static Timer instance;
+
 	public:
 
 		Timer()
@@ -20,6 +23,8 @@ namespace Common {
 		{};
 
 		~Timer() {};
+
+		static Timer& global();
 
 	private:
 		void addTask(std::string name) {
