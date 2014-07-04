@@ -24,7 +24,9 @@ namespace Common {
 
 		~Timer() {};
 
-		static Timer& global();
+		static Timer& global() {
+			return Timer::instance;
+		}
 
 	private:
 		void addTask(std::string name) {
@@ -84,5 +86,7 @@ namespace Common {
 		Node head;
 		Node* current;
 	};
+
+	Timer Timer::instance = Timer();
 
 };
